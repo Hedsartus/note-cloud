@@ -24,4 +24,6 @@ public class ConspectControllers {
     public Uni<List<NoteDto>> getRootNote() {
         return dataService.getRootNote();
     }
+
+
 }

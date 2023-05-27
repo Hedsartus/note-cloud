@@ -16,10 +16,6 @@ public interface DataService {
     @GET
     @Path("/all")
     Uni<List<NoteDto>> getRootNote();
-//
-//    @GET
-//    @Path("/notes/{idNote}")
-//    Uni<List<Note>> getNote();
 
     @GET
     @Path("/ooo")

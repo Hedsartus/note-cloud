@@ -17,7 +17,7 @@ public class ControllerSession {
     @Path("/create-session")
     //@Produces(MediaType.APPLICATION_JSON)
     public Uni<String> createSession(@QueryParam("key") String key, @QueryParam("value") String value) {
-        cookieSource.createSession(key, value);
+        cookieSource.createSession(key, value).subscribeAsCompletionStage().thenApply(status->"");
         return cookieSource.getValue(key);
     }
 
@@ -28,10 +28,10 @@ public class ControllerSession {
 //        return cookieSource.getUsernameFromSession(key);
 //    }
 //
-//    @GET
-//    @Path("/validate-session")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public Uni<Boolean> validateSession(String key) {
-//        return cookieSource.validateSession(key);
-//    }
+    @GET
+    @Path("/validate-session")
+    //@Produces(MediaType.APPLICATION_JSON)
+    public Uni<Boolean> validateSession(@QueryParam("key") String key) {
+        return cookieSource.validateSession(key);
+    }
 }

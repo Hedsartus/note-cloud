@@ -7,6 +7,7 @@ import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
@@ -34,7 +35,7 @@ public class AuthController {
     @PermitAll
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Uni<Response> authenticateAndSetCookie(
-            @RestHeader("desired-path") String desiredPath,
+            //@RestHeader("Desired-path") String desiredPath,
             @FormParam("login") String login,
             @FormParam("password") String password) {
 
@@ -43,8 +44,8 @@ public class AuthController {
                     if(item != null) {
                         return Response
                                 .status(Response.Status.SEE_OTHER)
+                                .header(HttpHeaders.LOCATION, "/")
                                 .cookie(new NewCookie("session", item))
-                                .location(URI.create(desiredPath))
                                 .build();
                     } else {
                         return Response
@@ -55,8 +56,15 @@ public class AuthController {
                 });
     }
 
-//    @GET
-//    public String fcerf() {
-//        return "";
-//    }
+    @GET
+    @Path("/")
+    public String fcerf() {
+        return "reeeees";
+    }
+
+    @GET
+    @Path("/test")
+    public String test() {
+        return "test";
+    }
 }

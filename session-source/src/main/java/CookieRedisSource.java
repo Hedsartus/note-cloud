@@ -39,12 +39,14 @@ public class CookieRedisSource implements CookieSource {
 
     @Override
     public Uni<Boolean> validateSession(String key) {
-        return keyCommands.exists(key) .flatMap((exists) -> {
-            if (!exists) { // ключ не найден, сессия недействительна
+
+        return keyCommands.exists(key).flatMap(exists -> {
+            if (!exists) {
+                // ключ не найден, сессия недействительна
                 return Uni.createFrom().item(false);
             }
             // ключ найден, проверяем значение ключа
-            return valueCommands.get(key).map((value) -> {
+            return valueCommands.get(key).map(value -> {
                 String[] val = value.split(":");
                 return val[0].equals(key);
             });

@@ -35,8 +35,10 @@ public class AuthServiceImpl implements AuthServ {
                         String session = cookie.getValue()+SPLITTER+
                                 Base64.getEncoder().encodeToString(login.getBytes(StandardCharsets.UTF_8));
 
-                        return sessionSource.createSession(cookie.getValue(), session)
-                                .map(item->item).convert().toString();
+                        sessionSource.createSession(cookie.getValue(), session).subscribeAsCompletionStage()
+                                .thenApply(status-> "");
+
+                        return cookie.getValue();
                     } else {
                         return null;
                     }

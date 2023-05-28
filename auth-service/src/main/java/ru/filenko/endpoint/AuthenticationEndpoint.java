@@ -24,7 +24,8 @@ public class AuthenticationEndpoint {
 
     @POST
     @Path("/login")
-    @Produces(MediaType.APPLICATION_JSON)
+    @PermitAll
+   //@Produces(MediaType.APPLICATION_JSON)
     public Uni<String> authenticate(@FormParam("login") String login, @FormParam("password") String password) {
         return authService.verifyUser(login, password);
     }

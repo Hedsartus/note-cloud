@@ -1,10 +1,10 @@
 package client;
 
-import dto.NoteDto;
+import dto.Note;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import java.util.List;
@@ -15,11 +15,6 @@ import java.util.List;
 public interface DataService {
     @GET
     @Path("/all")
-    Uni<List<NoteDto>> getRootNote();
-
-    @GET
-    @Path("/ooo")
-    String getTest();
-
-
+    @Produces(MediaType.APPLICATION_JSON)
+    Uni<List<Note>> getRootNote(@QueryParam("id") Long idUser, @CookieParam("session") String session);
 }

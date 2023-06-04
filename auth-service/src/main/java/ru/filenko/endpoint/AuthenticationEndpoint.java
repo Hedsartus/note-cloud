@@ -11,7 +11,6 @@ import jakarta.ws.rs.core.Response;
 import ru.filenko.services.AuthServ;
 
 @Path("/auth")
-@PermitAll
 public class AuthenticationEndpoint {
     @Inject
     AuthServ authService;
@@ -24,8 +23,7 @@ public class AuthenticationEndpoint {
 
     @POST
     @Path("/login")
-    @PermitAll
-   //@Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Uni<String> authenticate(@FormParam("login") String login, @FormParam("password") String password) {
         return authService.verifyUser(login, password);
     }

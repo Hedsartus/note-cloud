@@ -1,10 +1,10 @@
 package controllers;
 
 import client.AuthService;
+import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import io.smallrye.mutiny.Uni;
 import jakarta.annotation.security.PermitAll;
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -12,16 +12,17 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.NewCookie;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.jboss.resteasy.reactive.RestHeader;
 
 import java.net.URI;
 
-@Path("/auth")
+@Path("/")
 public class AuthController {
     @Inject
     @RestClient
     AuthService authService;
 
+    @Inject
+    Template editor;
     @GET
     @Path("/login")
     @PermitAll
@@ -50,21 +51,26 @@ public class AuthController {
                     } else {
                         return Response
                                 .status(Response.Status.FORBIDDEN)
-                                .location(URI.create("/auth/login"))
+                                .location(URI.create("/login"))
                                 .build();
                     }
                 });
     }
 
     @GET
-    @Path("/")
-    public String fcerf() {
-        return "reeeees";
-    }
-
-    @GET
     @Path("/test")
     public String test() {
         return "test";
+    }
+
+    @GET
+    public String main() {
+        return "main";
+    }
+
+    @GET
+    @Path("/editor")
+    public TemplateInstance editor() {
+        return editor.data("note", "ewferg e <b>gioerg</b> erg erg fjkvndfjkbn");
     }
 }

@@ -1,6 +1,9 @@
 package ru.filenko.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
+import io.quarkus.hibernate.reactive.panache.PanacheQuery;
+import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.mutiny.Uni;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -23,9 +26,17 @@ public class Note extends PanacheEntity   {
     @OneToMany(mappedBy = "note", fetch = FetchType.EAGER)
     private List<Question> questionsList = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_user")
+    @JsonIgnore
+    private User user;
+
     public Note () {}
-    public static Uni<List<Note>> findAlive(){
-        return list("parent = ?1", 0);
+
+    public static Uni<List<Note>> findAlive(Long idUser){
+        return find("SELECT n FROM Note n WHERE n.id_user = ?1",1L).list();
+        //return Note.find("parent = ?1 and id_user = ?2", 0, idUser);
+        //return find("parent = ?1 AND id_user = ?2", 0, idUser);
     }
 
     @Override

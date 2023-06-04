@@ -12,7 +12,7 @@ import jakarta.ws.rs.core.MediaType;
 
 
 
-@Path("register")
+@Path("/register")
 public class UserController {
     @Inject
     Template register;

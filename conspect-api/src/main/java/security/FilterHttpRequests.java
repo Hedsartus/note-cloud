@@ -10,12 +10,12 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 @ApplicationScoped
 public class FilterHttpRequests {
     public final static String SESSION_TAG = "session";
-    public final static String REQUIRE_LOGIN = "/auth/login";
+    public final static String REQUIRE_LOGIN = "/login";
     @RestClient
     SessionSource sessionSource;
 
     @RouteFilter(100)
-    void myFilter(RoutingContext rc) {
+    void filterRequest(RoutingContext rc) {
         if(!rc.request().path().equals(REQUIRE_LOGIN)) {
 
             Cookie cookies = rc.request().getCookie(SESSION_TAG);

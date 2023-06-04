@@ -19,11 +19,11 @@ public interface AuthService {
 
     @POST
     @Path("/login")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
     Uni<String> authenticate(@FormParam("login") String login, @FormParam("password") String password);
 
-    @GET
-    @Path("/validate")
-    Uni<Boolean> validate(@QueryParam("key") String key);
+//    @GET
+//    @Path("/validate")
+//    Uni<Boolean> validate(@QueryParam("key") String key);
 
 }

@@ -1,8 +1,6 @@
 package controllers;
 
 import client.AuthService;
-import io.quarkus.qute.Template;
-import io.quarkus.qute.TemplateInstance;
 import io.smallrye.mutiny.Uni;
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
@@ -17,14 +15,13 @@ import java.net.URI;
 
 @Path("/")
 public class AuthController {
+    private final String PATH_LOGIN = "/login";
     @Inject
     @RestClient
     AuthService authService;
 
-    @Inject
-    Template editor;
     @GET
-    @Path("/login")
+    @Path(PATH_LOGIN)
     @PermitAll
     @Produces(MediaType.TEXT_HTML)
     public String loginForm() {
@@ -32,11 +29,10 @@ public class AuthController {
     }
 
     @POST
-    @Path("/login")
+    @Path(PATH_LOGIN)
     @PermitAll
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Uni<Response> authenticateAndSetCookie(
-            //@RestHeader("Desired-path") String desiredPath,
             @FormParam("login") String login,
             @FormParam("password") String password) {
 
@@ -51,7 +47,7 @@ public class AuthController {
                     } else {
                         return Response
                                 .status(Response.Status.FORBIDDEN)
-                                .location(URI.create("/login"))
+                                .location(URI.create(PATH_LOGIN))
                                 .build();
                     }
                 });
@@ -64,13 +60,8 @@ public class AuthController {
     }
 
     @GET
+    @Produces(MediaType.TEXT_HTML)
     public String main() {
-        return "main";
-    }
-
-    @GET
-    @Path("/editor")
-    public TemplateInstance editor() {
-        return editor.data("note", "ewferg e <b>gioerg</b> erg erg fjkvndfjkbn");
+        return "main <br> <a href='/notes'>notes</a>";
     }
 }

@@ -21,9 +21,4 @@ public interface AuthService {
     @Path("/login")
     @Produces(MediaType.APPLICATION_JSON)
     Uni<String> authenticate(@FormParam("login") String login, @FormParam("password") String password);
-
-//    @GET
-//    @Path("/validate")
-//    Uni<Boolean> validate(@QueryParam("key") String key);
-
 }

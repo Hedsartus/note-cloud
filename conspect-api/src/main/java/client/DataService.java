@@ -15,6 +15,5 @@ import java.util.List;
 public interface DataService {
     @GET
     @Path("/all")
-    @Produces(MediaType.APPLICATION_JSON)
-    Uni<List<Note>> getRootNote(@QueryParam("id") Long idUser, @CookieParam("session") String session);
+    Uni<List<Note>> getRootNote(@QueryParam("login") String userLogin, @CookieParam("session") String session);
 }

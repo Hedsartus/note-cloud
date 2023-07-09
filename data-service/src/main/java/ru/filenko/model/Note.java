@@ -34,9 +34,7 @@ public class Note extends PanacheEntity   {
     public Note () {}
 
     public static Uni<List<Note>> findAlive(Long idUser){
-        return find("SELECT n FROM Note n WHERE n.id_user = ?1",1L).list();
-        //return Note.find("parent = ?1 and id_user = ?2", 0, idUser);
-        //return find("parent = ?1 AND id_user = ?2", 0, idUser);
+        return find("SELECT n FROM Note n WHERE n.id_user = ?1",idUser).list();
     }
 
     @Override

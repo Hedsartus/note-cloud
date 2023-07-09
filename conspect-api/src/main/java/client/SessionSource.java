@@ -13,14 +13,12 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface SessionSource {
     @GET
     @Path("/create-session")
-    //@Produces(MediaType.APPLICATION_JSON)
     Uni<String> createSession(@QueryParam("key") String key, @QueryParam("value") String value);
 
-//    @GET
-//    @Path("/get-username-from-session")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    Uni<String> getUsernameFromSession(String key);
-//
+    @GET
+    @Path("/get-username-from-session")
+    Uni<String> getUsernameFromSession(@QueryParam("key") String key);
+
     @GET
     @Path("/validate-session")
     @Produces(MediaType.APPLICATION_JSON)

@@ -19,4 +19,8 @@ public interface SessionSource {
     @Path("/validate-session")
     @Produces(MediaType.APPLICATION_JSON)
     Uni<Boolean> validateSession(@QueryParam("key") String key);
+
+    @GET
+    @Path("/get-username-from-session")
+    Uni<String> getUsernameFromSession(String key);
 }

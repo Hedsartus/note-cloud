@@ -14,7 +14,6 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface SessionSource {
     @GET
     @Path("/create-session")
-    //@Produces(MediaType.APPLICATION_JSON)
     Uni<String> createSession(@QueryParam("key") String key, @QueryParam("value") String value);
 
 //    @GET

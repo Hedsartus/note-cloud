@@ -2,8 +2,9 @@ package ru.filenko.controller;
 
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.QueryParam;
 import ru.filenko.model.Note;
 import ru.filenko.model.User;
 
@@ -14,9 +15,7 @@ import java.util.List;
 public class DataController {
     @GET
     @Path("/all")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Uni<List<Note>> getRootNote(@QueryParam("id") Long idUser,
-                                       @CookieParam("session") String session) {
-        return User.getUserByLogin("admin").map(User::getNoteList);
+    public Uni<List<Note>> getRootNote(@QueryParam("login") String userLogin) {
+        return User.getUserByLogin(userLogin).map(User::getNoteList);
     }
 }

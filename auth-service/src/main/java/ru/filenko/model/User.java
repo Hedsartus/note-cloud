@@ -18,15 +18,6 @@ public class User extends PanacheEntity {
     public String role;
     public User () {}
 
-    //
-//    public static void add(String username, String password, String role) {
-//        User user = new User();
-//        user.login = username;
-//        user.password = BcryptUtil.bcryptHash(password);
-//        user.role = role;
-//        user.persist();
-//    }
-
     public static Uni<User> getUserByLogin(String login) {
         return User.find("login", login).singleResult();
     }

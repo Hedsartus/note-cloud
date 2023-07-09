@@ -1,0 +1,163 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="create-table" author="hedsartus">
+        <createTable tableName="users">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login"  type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="notes">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_user"  type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_id"  type="bigint" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="html" type="varchar(2000)"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="id_user"
+                                 baseTableName="notes"
+                                 constraintName="fk_note_user"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+
+        <createTable tableName="questions">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="type" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_note"  type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="correct" type="boolean"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="id_note"
+                                 baseTableName="questions"
+                                 constraintName="fk_questions_notes"
+                                 referencedColumnNames="id"
+                                 referencedTableName="notes"/>
+
+        <createTable tableName="answers">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="id_question"  type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="correct" type="boolean"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="id_question"
+                                 baseTableName="answers"
+                                 constraintName="fk_answers_questions"
+                                 referencedColumnNames="id"
+                                 referencedTableName="questions"/>
+    </changeSet>
+    
+    <changeSet id="inset-data" author="hedsartus">
+        <insert tableName="users">
+            <column name="login" value="admin"/>
+            <column name="password" value="admin"/>
+            <column name="role" value="admin"/>
+        </insert>
+
+        <insert tableName="users">
+            <column name="login" value="user"/>
+            <column name="password" value="user"/>
+            <column name="role" value="user"/>
+        </insert>
+
+        <insert tableName="notes">
+            <column name="id_user" value="1"/>
+            <column name="parent_id" value="0"/>
+            <column name="title" value="Программирование"/>
+            <column name="html" value="Программирование и технологии"/>
+        </insert>
+
+        <insert tableName="notes">
+            <column name="id_user" value="1"/>
+            <column name="parent_id" value="1"/>
+            <column name="title" value="Java"/>
+            <column name="html" value="Java – это многоплатформенный, объектно-ориентированный и сетецентрический язык, который сам по себе может использоваться как платформа. Это быстрый, безопасный и надежный язык программирования для всего: от мобильных приложений и корпоративного ПО до приложений для работы с большими данными и серверных технологий."/>
+        </insert>
+        
+        <insert tableName="questions">
+            <column name="id_note" value="2"/>
+            <column name="type" value="1"/>
+            <column name="title" value="Какой язык программирования лежит в основе Java?"/>
+            <column name="correct" value="false"/>
+        </insert>
+
+        <insert tableName="answers">
+            <column name="id_question" value="1"/>
+            <column name="title" value="Lisp"/>
+            <column name="correct" value="false"/>
+        </insert>
+
+        <insert tableName="answers">
+            <column name="id_question" value="1"/>
+            <column name="title" value="Pascal"/>
+            <column name="correct" value="false"/>
+        </insert>
+
+        <insert tableName="answers">
+            <column name="id_question" value="1"/>
+            <column name="title" value="C++"/>
+            <column name="correct" value="true"/>
+        </insert>
+
+        <insert tableName="questions">
+            <column name="id_note" value="2"/>
+            <column name="type" value="1"/>
+            <column name="title" value="Для чего изначально разрабатывался язык программирования Java?"/>
+            <column name="correct" value="false"/>
+        </insert>
+
+        <insert tableName="answers">
+            <column name="id_question" value="2"/>
+            <column name="title" value="Для программирования бытовых устройств"/>
+            <column name="correct" value="true"/>
+        </insert>
+
+        <insert tableName="answers">
+            <column name="id_question" value="2"/>
+            <column name="title" value="Для развития нейронных сетей"/>
+            <column name="correct" value="false"/>
+        </insert>
+
+        <insert tableName="answers">
+            <column name="id_question" value="2"/>
+            <column name="title" value="Для решения сложных бизнес-задач"/>
+            <column name="correct" value="true"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
